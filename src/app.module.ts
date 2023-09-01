@@ -10,25 +10,13 @@ import { RegisterUserDto } from "./user/dtos/register-user.dto";
 import { RouteInfo } from "@nestjs/common/interfaces";
 import { JsonBodyMiddleware, RawBodyMiddleware } from "hichchi-nestjs-common/middlewares";
 import configuration from "./core/config/configuration";
+import { typeOrmOptions } from "./core/config/typeorm-options";
 
 const rawBodyRoutes: Array<RouteInfo> = [];
 
 @Module({
     imports: [
-        HichchiCrudModule.forRoot({
-            type: configuration().database.type,
-            host: configuration().database.host,
-            port: configuration().database.port,
-            username: configuration().database.user,
-            password: configuration().database.password,
-            database: configuration().database.schema,
-            charset: configuration().database.charset,
-            synchronize: configuration().database.synchronize,
-            entities: ["dist/**/*.entity{.ts,.js}"],
-            legacySpatialSupport: false,
-            keepConnectionAlive: true,
-            autoLoadEntities: true,
-        }),
+        HichchiCrudModule.forRoot(typeOrmOptions),
         HichchiAuthModule.registerAsync(
             {
                 imports: [UserModule],

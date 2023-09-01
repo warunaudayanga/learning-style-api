@@ -15,6 +15,7 @@ export default () => ({
         webUrl: process.env.APP_WEB_URL || "http://localhost:4200",
         emailVerifyUrl: process.env.APP_EMAIL_VERIFY_URL,
         passwordResetUrl: process.env.APP_PASSWORD_RESET_URL,
+        environment: process.env.NODE_ENV || "development",
     },
     cookies: {
         secret: process.env.APP_COOKIE_SECRET || "secret",
