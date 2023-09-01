@@ -28,6 +28,12 @@ const rawBodyRoutes: Array<RouteInfo> = [];
                     refreshSecret: configuration().jwt.refreshSecret,
                     refreshExpiresIn: configuration().jwt.refreshExpiresIn,
                 },
+                redis: {
+                    host: configuration().redis.host,
+                    port: configuration().redis.port,
+                    ttl: configuration().redis.ttl,
+                    auth_pass: configuration().redis.password,
+                },
                 registerDto: RegisterUserDto,
             },
         ),
