@@ -11,6 +11,10 @@ export const typeOrmOptions = {
     synchronize: configuration().database.synchronize,
     entities: ["dist/**/*.entity{.ts,.js}"],
     migrations: ["dist/database/migrations/*{.ts,.js}"],
+    ssl: configuration().database.ssl,
+    extra: {
+        sslMode: configuration().database.ssl ? configuration().database.sslMode : undefined,
+    },
     migrationsRun: false,
     legacySpatialSupport: false,
     keepConnectionAlive: true,

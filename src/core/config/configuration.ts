@@ -37,6 +37,8 @@ export default () => ({
         port: toNumber(process.env.DATABASE_PORT) || 3306,
         charset: "utf8mb4",
         synchronize: process.env.DATABASE_SYNC === "true",
+        ssl: process.env.DATABASE_SSL === "true",
+        sslMode: process.env.DATABASE_SSL_MODE || "require",
     },
     redis: {
         prefix: process.env.REDIS_PREFIX || "",
