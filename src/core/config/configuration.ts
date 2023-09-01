@@ -9,7 +9,7 @@ dotenv.config();
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default () => ({
     app: {
-        port: Number(process.env.APP_PORT) || 3000,
+        port: Number(process.env.APP_PORT || process.env.PORT) || 3000,
         adminPassword: process.env.APP_ADMIN_DEFAULT_PASSWORD || "admin@123",
         allowedOrigins: String(process.env.APP_ALLOWED_ORIGINS).split(",") || [],
         webUrl: process.env.APP_WEB_URL || "http://localhost:4200",
