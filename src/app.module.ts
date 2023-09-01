@@ -5,7 +5,6 @@ import { HichchiCrudModule } from "hichchi-nestjs-crud";
 import { HichchiAuthModule } from "hichchi-nestjs-auth";
 import { UserModule } from "./user/user.module";
 import { UserService } from "./user/services/user.service";
-import { TaskModule } from "./task/task.module";
 import { RegisterUserDto } from "./user/dtos/register-user.dto";
 import { RouteInfo } from "@nestjs/common/interfaces";
 import { JsonBodyMiddleware, RawBodyMiddleware } from "hichchi-nestjs-common/middlewares";
@@ -33,7 +32,6 @@ const rawBodyRoutes: Array<RouteInfo> = [];
             },
         ),
         UserModule,
-        TaskModule,
     ],
     controllers: [AppController],
     providers: [AppService],

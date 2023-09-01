@@ -17,7 +17,7 @@ export class UserEntity extends BaseEntity implements IUserEntity {
     @Column()
     salt: string;
 
-    @Column({ type: "enum", enum: UserRole, default: UserRole.STUDENT })
+    @Column({ default: UserRole.STUDENT })
     role: UserRole;
 
     @Column()
