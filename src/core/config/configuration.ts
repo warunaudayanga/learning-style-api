@@ -20,7 +20,7 @@ export default () => ({
     cookies: {
         secret: process.env.APP_COOKIE_SECRET || "secret",
         sameSite: (process.env.APP_COOKIE_SAME_SITE || "none") as boolean | "none" | "lax" | "strict",
-        secure: process.env.APP_COOKIE_INSECURE !== "true",
+        secure: process.env.APP_COOKIE_SECURE === "true",
     },
     jwt: {
         secret: process.env.JWT_SECRET,

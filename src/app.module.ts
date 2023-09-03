@@ -10,6 +10,7 @@ import { RouteInfo } from "@nestjs/common/interfaces";
 import { JsonBodyMiddleware, RawBodyMiddleware } from "hichchi-nestjs-common/middlewares";
 import configuration from "./core/config/configuration";
 import { typeOrmOptions } from "./core/config/typeorm-options";
+import { QuizModule } from "./quiz/quiz.module";
 
 const rawBodyRoutes: Array<RouteInfo> = [];
 
@@ -22,6 +23,10 @@ const rawBodyRoutes: Array<RouteInfo> = [];
                 useExisting: UserService,
             },
             {
+                cookies: {
+                    sameSite: configuration().cookies.sameSite,
+                    secure: configuration().cookies.secure,
+                },
                 jwt: {
                     secret: configuration().jwt.secret,
                     expiresIn: configuration().jwt.expiresIn,
@@ -38,6 +43,7 @@ const rawBodyRoutes: Array<RouteInfo> = [];
             },
         ),
         UserModule,
+        QuizModule,
     ],
     controllers: [AppController],
     providers: [AppService],

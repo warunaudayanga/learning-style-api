@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class Init1693571511778 implements MigrationInterface {

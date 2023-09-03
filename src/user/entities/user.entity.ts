@@ -1,7 +1,8 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { BaseEntity } from "hichchi-nestjs-crud";
 import { IUserEntity } from "hichchi-nestjs-common/interfaces";
 import { UserRole } from "../enums/user-role.enum";
+import { QuizAnswersEntity } from "../../quiz/entities/quiz-answers.entity";
 
 @Entity("user")
 export class UserEntity extends BaseEntity implements IUserEntity {
@@ -28,4 +29,7 @@ export class UserEntity extends BaseEntity implements IUserEntity {
 
     @Column()
     gender: string;
+
+    @OneToMany(() => QuizAnswersEntity, (answers) => answers.user)
+    answers: QuizAnswersEntity[];
 }
