@@ -709,7 +709,7 @@ export class QuizSeed1693666828430 implements MigrationInterface {
         });
 
         await queryRunner.manager.save(QuizCollectionEntity, {
-            type: QuizType.PATTERN,
+            type: QuizType.STYLE,
             quizzes: pqs.map((pq: IPatternQuiz) => ({
                 id: pq.id,
                 question: pq.question,

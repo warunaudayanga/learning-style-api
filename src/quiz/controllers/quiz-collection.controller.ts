@@ -12,16 +12,22 @@ import { IUserEntity } from "hichchi-nestjs-common/interfaces";
 export class QuizCollectionController {
     constructor(private readonly quizCollectionService: QuizCollectionService) {}
 
-    @Post()
+    @Get()
     @UseGuards(JwtAuthGuard)
-    async saveQuizzes(@Body() quizCollectionDto: QuizCollectionDto): Promise<QuizCollectionEntity> {
-        return await this.quizCollectionService.saveQuizCollection(quizCollectionDto);
+    async getAll(@CurrentUser() user: IUserEntity): Promise<QuizCollectionEntity[]> {
+        return this.quizCollectionService.getAllQuizCollections(user.id);
     }
 
     @Get(":type")
     @UseGuards(JwtAuthGuard)
     async get(@Param("type") type: string, @CurrentUser() user: IUserEntity): Promise<QuizCollectionEntity> {
         return this.quizCollectionService.getQuizCollection(type, user.id);
+    }
+
+    @Post()
+    @UseGuards(JwtAuthGuard)
+    async saveQuizzes(@Body() quizCollectionDto: QuizCollectionDto): Promise<QuizCollectionEntity> {
+        return await this.quizCollectionService.saveQuizCollection(quizCollectionDto);
     }
 
     @Delete()

@@ -16,19 +16,16 @@ export class QuizCollectionService extends CrudService<QuizCollectionEntity> {
         super(quizCollectionRepository, "quizCollection");
     }
 
-    async saveQuizCollection(quizCollectionDto: QuizCollectionDto): Promise<QuizCollectionEntity> {
-        const collection = await this.quizCollectionRepository.getOne({
-            where: { type: quizCollectionDto.type },
+    async getAllQuizCollections(userId?: string): Promise<QuizCollectionEntity[]> {
+        const [collections] = await this.quizCollectionRepository.getMany({
+            relations: ["answers"],
         });
-        if (!collection) {
-            return this.quizCollectionRepository.save({
-                type: quizCollectionDto.type,
-                quizzes: quizCollectionDto.quizzes,
+        if (userId) {
+            collections.forEach((collection) => {
+                collection.userAnswers = collection.answers?.find((answer) => answer.userId === userId)?.answers;
             });
         }
-        return await this.quizCollectionRepository.updateAndGet(collection.id, {
-            quizzes: quizCollectionDto.quizzes,
-        });
+        return collections;
     }
 
     async getQuizCollection(type: string, userId?: string): Promise<QuizCollectionEntity> {
@@ -43,6 +40,21 @@ export class QuizCollectionService extends CrudService<QuizCollectionEntity> {
             collection.userAnswers = collection.answers?.find((answer) => answer.userId === userId)?.answers;
         }
         return collection;
+    }
+
+    async saveQuizCollection(quizCollectionDto: QuizCollectionDto): Promise<QuizCollectionEntity> {
+        const collection = await this.quizCollectionRepository.getOne({
+            where: { type: quizCollectionDto.type },
+        });
+        if (!collection) {
+            return this.quizCollectionRepository.save({
+                type: quizCollectionDto.type,
+                quizzes: quizCollectionDto.quizzes,
+            });
+        }
+        return await this.quizCollectionRepository.updateAndGet(collection.id, {
+            quizzes: quizCollectionDto.quizzes,
+        });
     }
 
     async deleteQuizCollection(type: string): Promise<SuccessResponse> {
