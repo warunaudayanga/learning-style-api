@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { Endpoint } from "../../core/enums/endpoint.enum";
 import { QuizCollectionService } from "../services/quiz-collection.service";
 import { QuizCollectionDto } from "../dtos/quiz-collection.dto";
@@ -20,8 +20,12 @@ export class QuizCollectionController {
 
     @Get(":type")
     @UseGuards(JwtAuthGuard)
-    async get(@Param("type") type: string, @CurrentUser() user: IUserEntity): Promise<QuizCollectionEntity> {
-        return this.quizCollectionService.getQuizCollection(type, user.id);
+    async get(
+        @CurrentUser() user: IUserEntity,
+        @Param("type") type: string,
+        @Query("studentId") studentId?: string,
+    ): Promise<QuizCollectionEntity> {
+        return this.quizCollectionService.getQuizCollection(type, studentId || user.id);
     }
 
     @Post()

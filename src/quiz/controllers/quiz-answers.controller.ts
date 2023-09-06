@@ -16,22 +16,31 @@ export class QuizAnswersController {
     @Post(":type")
     @UseGuards(JwtAuthGuard)
     async saveQuizAnswers(
+        @CurrentUser() user: IUserEntity,
         @Param("type") type: QuizType,
         @Body() quizAnswersDto: QuizAnswersDto,
-        @CurrentUser() user: IUserEntity,
     ): Promise<QuizAnswersEntity> {
         return await this.quizAnswerService.saveQuizAnswers(user.id, type, quizAnswersDto);
     }
 
     @Get(":type")
     @UseGuards(JwtAuthGuard)
-    async getQuizAnswers(@Param("type") type: QuizType, @CurrentUser() user: IUserEntity): Promise<QuizAnswersEntity> {
+    async getQuizAnswers(@CurrentUser() user: IUserEntity, @Param("type") type: QuizType): Promise<QuizAnswersEntity> {
         return this.quizAnswerService.getQuizAnswers(user.id, type);
+    }
+
+    @Get(":type/:studentId")
+    @UseGuards(JwtAuthGuard)
+    async getStudentQuizAnswers(
+        @Param("type") type: QuizType,
+        @Param("studentId") studentId: string,
+    ): Promise<QuizAnswersEntity> {
+        return this.quizAnswerService.getQuizAnswers(studentId, type);
     }
 
     @Delete()
     @UseGuards(JwtAuthGuard)
-    async deleteQuizAnswers(@Param("type") type: QuizType, @CurrentUser() user: IUserEntity): Promise<SuccessResponse> {
+    async deleteQuizAnswers(@CurrentUser() user: IUserEntity, @Param("type") type: QuizType): Promise<SuccessResponse> {
         return this.quizAnswerService.deleteQuizAnswers(user.id, type);
     }
 }
