@@ -38,7 +38,7 @@ const rawBodyRoutes: Array<RouteInfo> = [];
                     host: configuration().redis.host,
                     port: configuration().redis.port,
                     auth_pass: configuration().redis.password,
-                    url: configuration().redis.url,
+                    prefix: configuration().redis.prefix,
                 },
                 registerDto: RegisterUserDto,
             },
