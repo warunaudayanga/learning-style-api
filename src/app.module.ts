@@ -34,10 +34,11 @@ const rawBodyRoutes: Array<RouteInfo> = [];
                     refreshExpiresIn: configuration().jwt.refreshExpiresIn,
                 },
                 redis: {
+                    ttl: configuration().redis.ttl,
                     host: configuration().redis.host,
                     port: configuration().redis.port,
-                    ttl: configuration().redis.ttl,
                     auth_pass: configuration().redis.password,
+                    url: configuration().redis.url,
                 },
                 registerDto: RegisterUserDto,
             },
