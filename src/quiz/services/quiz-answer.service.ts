@@ -38,7 +38,10 @@ export class QuizAnswerService extends CrudService<QuizAnswersEntity> {
     }
 
     async getQuizAnswers(userId: string, type: QuizType): Promise<QuizAnswersEntity> {
-        return this.getOne({ where: { quizCollection: { type }, user: { id: userId } } });
+        return this.getOne({
+            where: { quizCollection: { type }, user: { id: userId } },
+            relations: ["quizCollection"],
+        });
     }
 
     async deleteQuizAnswers(userId: string, type: QuizType): Promise<SuccessResponse> {
