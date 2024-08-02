@@ -762,6 +762,7 @@ export class AppController {
     @Get()
     @HttpCode(200)
     wakeUp(): any {
+        console.log("Asked to wake up.");
         return "I'm awake!";
     }
 }
