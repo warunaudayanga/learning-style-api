@@ -1,6 +1,6 @@
 // noinspection SpellCheckingInspection
 
-import { Controller } from "@nestjs/common";
+import { Controller, Get, HttpCode } from "@nestjs/common";
 // import { writeFileSync } from "fs";
 // import { DoneICT } from "./core/enums/done-ict.enum";
 // import { pbkdf2Sync, randomBytes } from "crypto";
@@ -757,5 +757,11 @@ export class AppController {
         //     writeFileSync("data.sql", sqlS);
         //     writeFileSync("data.json", JSON.stringify(data, null, 4));
         // }, 1000);
+    }
+
+    @Get()
+    @HttpCode(200)
+    wakeUp(): any {
+        return "I'm awake!";
     }
 }
