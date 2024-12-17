@@ -759,10 +759,9 @@ export class AppController {
         // }, 1000);
     }
 
-    @Get()
+    @Get("/health")
     @HttpCode(200)
-    wakeUp(): any {
-        console.log("Asked to wake up.");
-        return "I'm awake!";
+    health(): { status: "UP" } {
+        return { status: "UP" };
     }
 }
