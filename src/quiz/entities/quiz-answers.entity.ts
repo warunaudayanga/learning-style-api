@@ -1,18 +1,20 @@
-import { Column, Entity, ManyToOne } from "typeorm";
-import { BaseEntity } from "hichchi-nestjs-crud";
+import { Column, ManyToOne } from "typeorm";
+import { BaseEntity, HichchiEntity, HichchiJoinColumn } from "@hichchi/nest-crud";
 import { QuizCollectionEntity } from "./quiz-collection.entity";
-import { IQuizAnswer } from "../interfaces/quiz.interfaces";
-import { UserEntity } from "../../user/entities/user.entity";
+import { IQuizAnswer } from "../interfaces";
+import { UserEntity } from "../../user/entities";
 
-@Entity("quiz_answers")
+@HichchiEntity("quiz_answers")
 export class QuizAnswersEntity extends BaseEntity {
     @ManyToOne(() => QuizCollectionEntity, (quizCollection) => quizCollection.answers)
+    @HichchiJoinColumn()
     quizCollection: QuizCollectionEntity;
 
     @Column({ nullable: true })
     quizCollectionId: string;
 
     @ManyToOne(() => UserEntity, (user) => user.answers)
+    @HichchiJoinColumn()
     user: UserEntity;
 
     @Column({ nullable: true })

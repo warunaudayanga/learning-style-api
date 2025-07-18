@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { IQuizChoice } from "../interfaces/quiz.interfaces";
+import { IQuizChoice } from "../interfaces";
 
 export class QuizChoiceDto implements IQuizChoice {
     @IsNotEmpty()

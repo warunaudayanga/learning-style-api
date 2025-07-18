@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // noinspection JSUnusedGlobalSymbols
 
-import { MigrationInterface, QueryRunner } from "typeorm"
-import { IPatternQuiz, IQuiz } from "../../quiz/interfaces/quiz.interfaces";
-import { PatternQuizCategory } from "../../quiz/enums/pattern-quiz-category.enum";
-import { QuizCollectionEntity } from "../../quiz/entities/quiz-collection.entity";
+import { MigrationInterface, QueryRunner } from "typeorm";
+import { IPatternQuiz, IQuiz } from "../../quiz/interfaces";
+import { PatternQuizCategory } from "../../quiz/enums";
 import { v4 as uuid } from "uuid";
-import { QuizType  } from "../../quiz/enums/quiz-type.enum";
+import { QuizCollectionEntity } from "../../quiz/entities";
+import { QuizType } from "../../quiz/enums";
 
-export class QuizSeed1693666828430 implements MigrationInterface {
-
+export class QuizSeed1752702682448 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         const dtos = [
             {
@@ -597,7 +597,8 @@ export class QuizSeed1693666828430 implements MigrationInterface {
                 sequence: undefined,
             },
             {
-                question: "Some teachers start their lectures with an outline of what they will cover. Such outlines are",
+                question:
+                    "Some teachers start their lectures with an outline of what they will cover. Such outlines are",
                 choiceCategories: [],
                 choices: [
                     {
@@ -721,7 +722,6 @@ export class QuizSeed1693666828430 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query("DELETE FROM quizzes WHERE true;");
+        await queryRunner.query("DELETE FROM quiz_collections WHERE true;");
     }
-
 }

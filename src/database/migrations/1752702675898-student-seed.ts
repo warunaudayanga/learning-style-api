@@ -1,11 +1,12 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
-import { pbkdf2Sync, randomBytes } from "crypto";
-import { UserEntity } from "../../user/entities/user.entity";
-import { UserRole } from "../../user/enums/user-role.enum";
-import { DoneICT } from "../../core/enums/done-ict.enum";
-
+/* eslint-disable @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-argument */
 // noinspection JSUnusedGlobalSymbols
-export class StudentSeed1695226684355 implements MigrationInterface {
+
+import { MigrationInterface, QueryRunner } from "typeorm";
+import { UserEntity } from "../../user/entities";
+import { DoneICT, UserRole } from "../../user/enums";
+import { AuthService } from "@hichchi/nest-auth";
+
+export class StudentSeed1752702675898 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         const students: any = [
             {
@@ -527,7 +528,7 @@ export class StudentSeed1695226684355 implements MigrationInterface {
                 which: "ICT NVQ Level 5",
             },
             {
-                name: "K.D.M.sewwandi",
+                name: "K.D.M. sewwandi",
                 regNo: "GA/21/0019",
                 dob: "3/9/1997",
                 email: "sewwandi0309@gmail.com",
@@ -729,14 +730,15 @@ export class StudentSeed1695226684355 implements MigrationInterface {
 
             student.cot = "Galle";
 
-            const salt = randomBytes(32).toString("hex");
-            const password = pbkdf2Sync("student@123", salt, 10000, 64, "sha512").toString("hex");
+            const password = AuthService.generateHash("student@123");
 
             const dto: Partial<UserEntity> = {
                 username: student.regNo,
                 password,
-                salt,
                 name: student.name,
+                firstName: student.name.split(" ")[0],
+                lastName: student.name.split(" ")[1],
+                fullName: student.name,
                 dob: new Date(student.dob).toISOString().split("T")[0],
                 gender: student.gender,
                 regNo: student.regNo,
@@ -767,6 +769,6 @@ export class StudentSeed1695226684355 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DELETE FROM user WHERE role='${UserRole.STUDENT}';`);
+        await queryRunner.query(`DELETE FROM users WHERE role='${UserRole.STUDENT}';`);
     }
 }

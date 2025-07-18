@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { HichchiCrudModule } from "hichchi-nestjs-crud";
-import { QuizCollectionEntity } from "./entities/quiz-collection.entity";
+import { HichchiCrudModule } from "@hichchi/nest-crud";
+import { QuizAnswersEntity, QuizCollectionEntity } from "./entities";
 import { QuizCollectionRepository } from "./repositories/quiz-collection.repository";
 import { QuizCollectionService } from "./services/quiz-collection.service";
 import { QuizAnswersController } from "./controllers/quiz-answers.controller";
-import { QuizAnswersEntity } from "./entities/quiz-answers.entity";
 import { QuizCollectionController } from "./controllers/quiz-collection.controller";
 import { QuizAnswerService } from "./services/quiz-answer.service";
 import { QuizAnswerRepository } from "./repositories/quiz-answer.repository";

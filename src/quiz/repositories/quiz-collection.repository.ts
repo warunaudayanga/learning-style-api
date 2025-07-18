@@ -1,15 +1,9 @@
-import { BaseRepository } from "hichchi-nestjs-crud";
-import { QuizCollectionEntity } from "../entities/quiz-collection.entity";
-import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
-import { InjectRepository } from "@nestjs/typeorm/dist/common/typeorm.decorators";
-import { Repository } from "typeorm/repository/Repository";
+import { BaseRepository, HichchiRepository, Repository, InjectRepository } from "@hichchi/nest-crud";
+import { QuizCollectionEntity } from "../entities";
 
-@Injectable()
+@HichchiRepository(QuizCollectionEntity)
 export class QuizCollectionRepository extends BaseRepository<QuizCollectionEntity> {
-    constructor(
-        @InjectRepository(QuizCollectionEntity)
-        protected readonly quizCollectionRepository: Repository<QuizCollectionEntity>,
-    ) {
-        super(quizCollectionRepository);
+    constructor(@InjectRepository(QuizCollectionEntity) repository: Repository<QuizCollectionEntity>) {
+        super(repository);
     }
 }

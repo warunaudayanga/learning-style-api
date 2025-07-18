@@ -1,23 +1,24 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { HichchiCrudModule } from "hichchi-nestjs-crud";
-import { HichchiAuthModule } from "hichchi-nestjs-auth";
 import { UserModule } from "./user/user.module";
 import { UserService } from "./user/services/user.service";
-import { RegisterUserDto } from "./user/dtos/register-user.dto";
+import { SignUpDto } from "./user/dtos/sign-up.dto";
 import { RouteInfo } from "@nestjs/common/interfaces";
-import { JsonBodyMiddleware, RawBodyMiddleware } from "hichchi-nestjs-common/middlewares";
 import configuration from "./core/config/configuration";
 import { typeOrmOptions } from "./core/config/typeorm-options";
 import { QuizModule } from "./quiz/quiz.module";
+import { HichchiCrudModule } from "@hichchi/nest-crud";
+import { HichchiAuthModule } from "@hichchi/nest-auth";
+import { JsonBodyMiddleware, RawBodyMiddleware } from "@hichchi/nest-core";
+import { AuthField } from "@hichchi/nest-connector/auth";
 
 const rawBodyRoutes: Array<RouteInfo> = [];
 
 @Module({
     imports: [
         HichchiCrudModule.forRoot(typeOrmOptions),
-        HichchiAuthModule.registerAsync(
+        HichchiAuthModule.register(
             {
                 imports: [UserModule],
                 useExisting: UserService,
@@ -28,20 +29,21 @@ const rawBodyRoutes: Array<RouteInfo> = [];
                     secure: configuration().cookies.secure,
                 },
                 jwt: {
-                    secret: configuration().jwt.secret,
-                    expiresIn: configuration().jwt.expiresIn,
-                    refreshSecret: configuration().jwt.refreshSecret,
-                    refreshExpiresIn: configuration().jwt.refreshExpiresIn,
+                    secret: configuration().jwt.secret!,
+                    expiresIn: configuration().jwt.expiresIn!,
+                    refreshSecret: configuration().jwt.refreshSecret!,
+                    refreshExpiresIn: configuration().jwt.refreshExpiresIn!,
                 },
                 redis: {
                     ttl: configuration().redis.ttl,
                     host: configuration().redis.host,
                     port: configuration().redis.port,
-                    auth_pass: configuration().redis.password,
+                    password: configuration().redis.password,
                     prefix: configuration().redis.prefix,
                     url: configuration().redis.url,
                 },
-                registerDto: RegisterUserDto,
+                authField: AuthField.USERNAME,
+                signUpDto: SignUpDto,
             },
         ),
         UserModule,

@@ -3,7 +3,7 @@
 import { IsNotEmpty, ValidateNested } from "class-validator";
 import { QuizChoiceDto } from "./quiz-choice.dto";
 import { Type } from "class-transformer";
-import { IQuiz } from "../interfaces/quiz.interfaces";
+import { IQuiz } from "../interfaces";
 
 export class QuizDto implements Partial<IQuiz> {
     @IsNotEmpty()

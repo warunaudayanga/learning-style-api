@@ -1,9 +1,10 @@
 import configuration from "./configuration";
+import { ConnectionOptions } from "@hichchi/nest-crud";
 
-export const typeOrmOptions = {
+export const typeOrmOptions: ConnectionOptions = {
     type: configuration().database.type,
     host: configuration().database.host,
-    port: configuration().database.port,
+    port: configuration().database.port!,
     username: configuration().database.user,
     password: configuration().database.password,
     database: configuration().database.schema,
@@ -11,9 +12,9 @@ export const typeOrmOptions = {
     synchronize: configuration().database.synchronize,
     entities: ["dist/**/*.entity{.ts,.js}"],
     migrations: ["dist/database/migrations/*{.ts,.js}"],
-    ssl: configuration().database.ssl,
-    migrationsRun: false,
+    // ssl: configuration().database.ssl,
+    // migrationsRun: false,
     legacySpatialSupport: false,
-    keepConnectionAlive: true,
+    // keepConnectionAlive: true,
     autoLoadEntities: true,
 };

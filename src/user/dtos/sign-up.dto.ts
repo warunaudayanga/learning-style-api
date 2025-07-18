@@ -1,9 +1,8 @@
 import { IsEnum, IsNotEmpty, IsOptional } from "class-validator";
-import { RegisterDto } from "hichchi-nestjs-auth";
-import { Gender } from "../enums/gender.enum";
-import { DoneICT } from "../../core/enums/done-ict.enum";
+import { SignUpDto as Dto } from "@hichchi/nest-auth";
+import { DoneICT, Gender } from "../enums";
 
-export class RegisterUserDto extends RegisterDto {
+export class SignUpDto extends Dto {
     @IsNotEmpty()
     name: string;
 
@@ -13,18 +12,15 @@ export class RegisterUserDto extends RegisterDto {
     @IsNotEmpty()
     dob: string;
 
-    @IsNotEmpty()
-    username: string;
+    @IsOptional()
+    declare email: string;
 
     @IsNotEmpty()
-    password: string;
+    declare username: string;
 
     @IsEnum(Gender)
     @IsNotEmpty()
     gender: string;
-
-    @IsOptional()
-    email: string;
 
     @IsOptional()
     cot: string;

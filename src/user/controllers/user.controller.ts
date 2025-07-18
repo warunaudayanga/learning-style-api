@@ -1,12 +1,11 @@
 import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
-import { Endpoint } from "../../core/enums/endpoint.enum";
-import { IPaginatedResponse, IUserEntity } from "hichchi-nestjs-common/interfaces";
-import { JwtAuthGuard } from "hichchi-nestjs-auth/auth/guards/jwt-auth.guard";
+import { Endpoint } from "../../core/enums";
 import { UserService } from "../services/user.service";
-import { IPagination, Pager, Sorter } from "hichchi-nestjs-crud";
+import { Pager, Sorter, SortOptions } from "@hichchi/nest-crud";
 import { FilterUserDto } from "../dtos/filter-user.dto";
-import { ISort } from "hichchi-nestjs-crud/types/sort.type";
-import { UserEntity } from "../entities/user.entity";
+import { PaginatedResponse, Pagination } from "@hichchi/nest-connector/crud";
+import { User } from "../interfaces";
+import { JwtAuthGuard } from "@hichchi/nest-auth";
 
 @Controller(Endpoint.USER)
 export class UserController {
@@ -14,11 +13,11 @@ export class UserController {
 
     @Get()
     @UseGuards(JwtAuthGuard)
-    async getAll(
+    async getMany(
         @Query() filters: FilterUserDto,
-        @Sorter() sort: ISort<IUserEntity>,
-        @Pager() pagination?: IPagination,
-    ): Promise<IPaginatedResponse<UserEntity>> {
+        @Sorter() sort: SortOptions<User>,
+        @Pager({ page: 1, limit: 20 }) pagination: Pagination,
+    ): Promise<PaginatedResponse<User>> {
         return await this.userService.getMany({ filters, sort, pagination });
     }
 
@@ -26,15 +25,15 @@ export class UserController {
     @UseGuards(JwtAuthGuard)
     async getAllStudents(
         @Query() filters: FilterUserDto,
-        @Sorter() sort: ISort<IUserEntity>,
-        @Pager() pagination?: IPagination,
-    ): Promise<IPaginatedResponse<UserEntity>> {
+        @Sorter() sort: SortOptions<User>,
+        @Pager({ page: 1, limit: 20 }) pagination: Pagination,
+    ): Promise<PaginatedResponse<User>> {
         return await this.userService.getAllStudents(filters, sort, pagination);
     }
 
     @Get("student/:id")
     @UseGuards(JwtAuthGuard)
-    async getStudentById(@Param("id") id: string): Promise<UserEntity> {
+    async getStudentById(@Param("id") id: string): Promise<User> {
         return await this.userService.getStudentById(id);
     }
 }

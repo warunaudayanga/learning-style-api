@@ -1,9 +1,9 @@
-import { Column, Entity, OneToMany } from "typeorm";
-import { BaseEntity } from "hichchi-nestjs-crud";
-import { IQuiz, IQuizAnswer } from "../interfaces/quiz.interfaces";
+import { Column, OneToMany } from "typeorm";
+import { IQuiz, IQuizAnswer } from "../interfaces";
 import { QuizAnswersEntity } from "./quiz-answers.entity";
+import { BaseEntity, HichchiEntity } from "@hichchi/nest-crud";
 
-@Entity("quiz_collections")
+@HichchiEntity("quiz_collections")
 export class QuizCollectionEntity extends BaseEntity {
     @Column()
     type: string;

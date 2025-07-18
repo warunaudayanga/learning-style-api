@@ -1,12 +1,11 @@
 // noinspection JSUnresolvedReference
 
 import * as dotenv from "dotenv";
-import { DatabaseType } from "typeorm";
-import { toNumber } from "hichchi-utils";
+import { DatabaseTypes } from "@hichchi/nest-crud";
+import { toNumber } from "@hichchi/utils";
 
 dotenv.config();
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default () => ({
     app: {
         port: Number(process.env.APP_PORT || process.env.PORT) || 3000,
@@ -24,17 +23,17 @@ export default () => ({
     },
     jwt: {
         secret: process.env.JWT_SECRET,
-        expiresIn: toNumber(process.env.JWT_EXP) || 60 * 60 * 24,
+        expiresIn: toNumber(process.env.JWT_EXP || 60 * 60 * 24),
         refreshSecret: process.env.JWT_REFRESH_SECRET,
-        refreshExpiresIn: toNumber(process.env.JWT_REFRESH_EXP) || 60 * 60 * 24 * 30,
+        refreshExpiresIn: toNumber(process.env.JWT_REFRESH_EXP || 60 * 60 * 24 * 30),
     },
     database: {
-        type: (process.env.DATABASE_TYPE || "mysql") as DatabaseType,
+        type: (process.env.DATABASE_TYPE || "mysql") as DatabaseTypes,
         host: process.env.DATABASE_HOST || "localhost",
         user: process.env.DATABASE_USER || "admin",
         password: process.env.DATABASE_PASSWORD || "root",
         schema: process.env.DATABASE_SCHEMA || "ls-dev",
-        port: toNumber(process.env.DATABASE_PORT) || 3306,
+        port: toNumber(process.env.DATABASE_PORT || 3306),
         charset: "utf8mb4",
         synchronize: process.env.DATABASE_SYNC === "true",
         ssl: process.env.DATABASE_SSL === "true",

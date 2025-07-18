@@ -177,6 +177,7 @@ const quizzes = [
 
 async function init(): Promise<void> {
     const answers = (await csv().fromFile("alf.csv")).map((obj) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const data = Object.values(obj);
         data.shift();
         return data;
@@ -186,7 +187,7 @@ async function init(): Promise<void> {
 
     for (let i = 0; i < answers.length; i++) {
         const userId = userIds[i];
-        const userAnswers = [];
+        const userAnswers: any[] = [];
 
         for (let j = 0; j < answers[i].length; j++) {
             userAnswers.push({
@@ -208,4 +209,4 @@ async function init(): Promise<void> {
     writeFileSync("alf.sql", sql);
 }
 
-init();
+void init();

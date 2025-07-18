@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
-import { Endpoint } from "../../core/enums/endpoint.enum";
+import { Endpoint } from "../../core/enums";
 import { QuizCollectionService } from "../services/quiz-collection.service";
 import { QuizCollectionDto } from "../dtos/quiz-collection.dto";
-import { QuizCollectionEntity } from "../entities/quiz-collection.entity";
-import { SuccessResponse } from "hichchi-nestjs-common/responses";
-import { JwtAuthGuard } from "hichchi-nestjs-auth/auth/guards/jwt-auth.guard";
-import { CurrentUser } from "hichchi-nestjs-auth/auth/decorators/request-user.decorator";
-import { IUserEntity } from "hichchi-nestjs-common/interfaces";
+import { CurrentUser, JwtAuthGuard } from "@hichchi/nest-auth";
+import { User } from "../../user/interfaces";
+import { SuccessResponse } from "@hichchi/nest-connector";
+import { QuizCollection } from "../interfaces";
 
 @Controller(Endpoint.QUIZ)
 export class QuizCollectionController {
@@ -14,23 +13,23 @@ export class QuizCollectionController {
 
     @Get()
     @UseGuards(JwtAuthGuard)
-    async getAll(@CurrentUser() user: IUserEntity): Promise<QuizCollectionEntity[]> {
+    async getAll(@CurrentUser() user: User): Promise<QuizCollection[]> {
         return this.quizCollectionService.getAllQuizCollections(user.id);
     }
 
     @Get(":type")
     @UseGuards(JwtAuthGuard)
     async get(
-        @CurrentUser() user: IUserEntity,
+        @CurrentUser() user: User,
         @Param("type") type: string,
         @Query("studentId") studentId?: string,
-    ): Promise<QuizCollectionEntity> {
+    ): Promise<QuizCollection> {
         return this.quizCollectionService.getQuizCollection(type, studentId || user.id);
     }
 
     @Post()
     @UseGuards(JwtAuthGuard)
-    async saveQuizzes(@Body() quizCollectionDto: QuizCollectionDto): Promise<QuizCollectionEntity> {
+    async saveQuizzes(@Body() quizCollectionDto: QuizCollectionDto): Promise<QuizCollection | null> {
         return await this.quizCollectionService.saveQuizCollection(quizCollectionDto);
     }
 

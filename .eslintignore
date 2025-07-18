@@ -1,5 +1,4 @@
 /node_modules
-.eslintrc.js
 README.md
 errors.json
 #/src/database/migrations

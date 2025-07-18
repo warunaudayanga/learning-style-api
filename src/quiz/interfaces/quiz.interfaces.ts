@@ -1,4 +1,6 @@
-import { PatternQuizCategory } from "../enums/pattern-quiz-category.enum";
+import { Model } from "@hichchi/nest-connector/crud";
+import { PatternQuizCategory } from "../enums";
+import { User } from "../../user/interfaces";
 
 export interface IQuizChoice {
     id: string;
@@ -24,4 +26,20 @@ export interface IPatternQuizChoice extends IQuizChoice {
 export interface IPatternQuiz extends IQuiz {
     choices: IPatternQuizChoice[];
     choiceCategories: PatternQuizCategory[];
+}
+
+export interface QuizCollection extends Model {
+    type: string;
+    quizzes: IQuiz[];
+    answers: QuizAnswers[];
+    userAnswers?: IQuizAnswer[];
+}
+
+export interface QuizAnswers extends Model {
+    quizCollection: QuizCollection;
+    quizCollectionId: string;
+    user: User;
+    userId: string;
+    answers: IQuizAnswer[];
+    result?: object;
 }

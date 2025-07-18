@@ -1,23 +1,23 @@
-import { Column, Entity, OneToMany } from "typeorm";
-import { BaseEntity } from "hichchi-nestjs-crud";
-import { IUserEntity } from "hichchi-nestjs-common/interfaces";
-import { UserRole } from "../enums/user-role.enum";
-import { QuizAnswersEntity } from "../../quiz/entities/quiz-answers.entity";
-import { DoneICT } from "../../core/enums/done-ict.enum";
+import { Column, OneToMany } from "typeorm";
+import { HichchiEntity, HichchiUserEntity, USER_ENTITY_TABLE_NAME } from "@hichchi/nest-crud";
+import { AuthProvider } from "@hichchi/nest-connector/auth";
+import { DoneICT, UserRole } from "../enums";
+import { QuizAnswersEntity } from "../../quiz/entities";
+import { User } from "../interfaces";
 
-@Entity("user")
-export class UserEntity extends BaseEntity implements IUserEntity {
+@HichchiEntity(USER_ENTITY_TABLE_NAME)
+export class UserEntity extends HichchiUserEntity implements User {
     @Column()
     name: string;
 
-    @Column()
-    username: string;
+    @Column({ nullable: true })
+    declare email: string;
+
+    @Column({ nullable: true })
+    declare username: string;
 
     @Column()
     password: string;
-
-    @Column()
-    salt: string;
 
     @Column({ default: UserRole.STUDENT })
     role: UserRole;
@@ -30,9 +30,6 @@ export class UserEntity extends BaseEntity implements IUserEntity {
 
     @Column()
     gender: string;
-
-    @Column({ nullable: true })
-    email: string;
 
     @Column({ nullable: true })
     cot: string;
@@ -90,4 +87,16 @@ export class UserEntity extends BaseEntity implements IUserEntity {
 
     @OneToMany(() => QuizAnswersEntity, (answers) => answers.user)
     answers: QuizAnswersEntity[];
+
+    @Column({ default: false })
+    emailVerified: boolean;
+
+    @Column({ type: "varchar", nullable: true })
+    avatar: string | null;
+
+    @Column({ type: "json", nullable: true })
+    profileData: object | null;
+
+    @Column({ type: "enum", enum: AuthProvider, nullable: false })
+    signUpType: AuthProvider;
 }

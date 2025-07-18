@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { HichchiCrudModule } from "hichchi-nestjs-crud";
-import { UserRepository } from "./repositories/user.repository";
+import { HichchiCrudModule } from "@hichchi/nest-crud";
+import { UserRepository } from "./repositories";
 import { UserService } from "./services/user.service";
-import { UserEntity } from "./entities/user.entity";
+import { UserEntity } from "./entities";
 import { UserController } from "./controllers/user.controller";
 
 @Module({
