@@ -36,9 +36,6 @@ const rawBodyRoutes: Array<RouteInfo> = [];
                 },
                 redis: {
                     ttl: configuration().redis.ttl,
-                    host: configuration().redis.host,
-                    port: configuration().redis.port,
-                    password: configuration().redis.password,
                     prefix: configuration().redis.prefix,
                     url: configuration().redis.url,
                 },

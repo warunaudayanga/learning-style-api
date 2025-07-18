@@ -27,10 +27,10 @@
     "migration:revert": "npm run typeorm -- migration:revert"
   },
   "dependencies": {
-    "@hichchi/nest-auth": "0.0.1-test.4",
+    "@hichchi/nest-auth": "^0.0.1-beta.4",
     "@hichchi/nest-connector": "^0.0.1-beta.3",
-    "@hichchi/nest-core": "^0.0.1-test.1",
-    "@hichchi/nest-crud": "^0.0.1-test.1",
+    "@hichchi/nest-core": "^0.0.1-beta.4",
+    "@hichchi/nest-crud": "^0.0.1-beta.4",
     "@hichchi/utils": "^0.0.1-beta.2",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",

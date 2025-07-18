@@ -41,11 +41,8 @@ export default () => ({
     },
     redis: {
         prefix: process.env.REDIS_PREFIX || "",
-        host: process.env.REDIS_HOST || "localhost",
-        port: Number(process.env.REDIS_PORT) || 6379,
-        password: process.env.REDIS_PASSWORD,
         ttl: Number(process.env.REDIS_CACHE_TTL) || 7890000,
-        url: process.env.REDIS_URL || undefined,
+        url: process.env.REDIS_URL!,
     },
     regex: {
         year: new RegExp(/^[1-9]\d{3,}$/),
