@@ -6,7 +6,7 @@ import { Controller, Get, HttpCode } from "@nestjs/common";
 export class AppController {
     constructor() {}
 
-    @Get()
+    @Get(["", "health", "status"])
     @HttpCode(200)
     health(): {
         status: string;
