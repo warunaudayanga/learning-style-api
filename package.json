@@ -8,7 +8,6 @@
   "scripts": {
     "prebuild": "npm install",
     "build": "rimraf dist && nest build",
-    "build:prod": "rimraf dist && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main",
     "start:dev": "nest start --watch",
@@ -26,7 +25,7 @@
     "migration:run": "npm run typeorm -- migration:run",
     "migration:run:local": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
-    "vercel-build": "npm run migration:run && npm run build:prod"
+    "vercel-build": "npm run build && npm run migration:run"
   },
   "dependencies": {
     "@hichchi/nest-auth": "^0.0.1-beta.4",
